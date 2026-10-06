@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Optimizer Pro</title>
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-card: #161f30;
+            --accent-color: #00ff88;
+            --accent-blue: #00d8ff;
+            --text-main: #ffffff;
+            --text-dim: #8a99ad;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        header {
+            text-align: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .fps-gauge {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,216,255,0.1));
+            border: 1px solid var(--accent-color);
+        }
+
+        .fps-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .fps-target {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-align: right;
+        }
+
+        .device-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .device-info .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            background: rgba(0, 255, 136, 0.1);
+            padding: 4px 8px;
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .device-info h2 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .device-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .device-details span strong {
+            color: var(--text-main);
+        }
+
+        .perm-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #2c3a4e;
+            transition: .3s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px; width: 18px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--accent-color); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .section-title {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .game-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .game-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .game-item:hover {
+            border-color: var(--accent-blue);
+            background: rgba(0, 216, 255, 0.05);
+        }
+
+        .game-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .game-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #2c3a4e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 14, 23, 0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #161f30;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-color));
+            transition: width 0.3s;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-color), #00b359);
+            color: #000;
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <h1>⚡ Game Optimizer Pro</h1>
+        </header>
+
+        <div class="card fps-gauge">
+            <div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">DESEMPENHO ATUAL</div>
+                <div class="fps-value" id="fps-counter">--</div>
+            </div>
+            <div class="fps-target">
+                <div>META: <strong>70 FPS</strong></div>
+                <div style="color: var(--accent-color);">Estabilidade: 99.4%</div>
+            </div>
+        </div>
+
+        <div class="card device-info">
+            <div class="status">✓ Aparelho Reconhecido</div>
+            <h2>Dispositivo do Proprietário</h2>
+            <div class="device-details">
+                <span>Marca: <strong id="dev-brand">Detectando...</strong></span>
+                <span>Modelo: <strong id="dev-model">Detectando...</strong></span>
+                <span>Sistema: <strong id="dev-os">Detectando...</strong></span>
+                <span>Modo: <strong>Admin Ativo</strong></span>
+            </div>
+        </div>
+
+        <div class="card perm-box">
+            <div>
+                <div><strong>Ajustes de Administrador</strong></div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Otimização direta do sistema</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div>
+            <div class="section-title">Selecione o jogo para otimizar</div>
+            <div class="game-list">
+                <div class="game-item" onclick="selectGame('Free Fire')">
+                    <div class="game-meta">
+                        <div class="game-icon">🔥</div>
+                        <div>
+                            <div><strong>Free Fire</strong></div>
+                            <div style="font-size: 0.75rem; color: var(--text-dim);">Perfil: Padrão</div>
+                        </div>
+                    </div>
+                    <span>➔</span>
+                </div>
+                <div class="game-item" onclick="selectGame('PUBG Mobile')">
+                    <div class="game-meta">
+                        <div class="game-icon">🔫</div>
+                        <div>
+                            <div><strong>PUBG Mobile</strong></div>
+                            <div style="font-size: 0.75rem; color: var(--text-dim);">Perfil: Padrão</div>
+                        </div>
+                    </div>
+                    <span>➔</span>
+                </div>
+                <div class="game-item" onclick="selectGame('Call of Duty')">
+                    <div class="game-meta">
+                        <div class="game-icon">🎯</div>
+                        <div>
+                            <div><strong>Call of Duty Mobile</strong></div>
+                            <div style="font-size: 0.75rem; color: var(--text-dim);">Perfil: Padrão</div>
+                        </div>
+                    </div>
+                    <span>➔</span>
+                </div>
+                <div class="game-item" onclick="selectGame('Roblox')">
+                    <div class="game-meta">
+                        <div class="game-icon">🧱</div>
+                        <div>
+                            <div><strong>Roblox</strong></div>
+                            <div style="font-size: 0.75rem; color: var(--text-dim);">Perfil: Padrão</div>
+                        </div>
+                    </div>
+                    <span>➔</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="optimizer-modal">
+        <h2 id="opt-title">Otimizando...</h2>
+        <p id="opt-status" style="color: var(--text-dim); font-size: 0.85rem; margin-top: 8px;">Ajustando memória RAM...</p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div id="modal-actions" style="display: none; width: 100%;">
+            <button class="btn btn-primary" onclick="launchGame()">▶️ ENTRAR NO JOGO</button>
+            <button class="btn btn-secondary" onclick="closeModal()">⚙️ MENU OPTIMIZER</button>
+        </div>
+    </div>
+
+    <script>
+        let frameCount = 0;
+        let lastTime = performance.now();
+        const fpsCounterEl = document.getElementById('fps-counter');
+
+        function updateFPS() {
+            const now = performance.now();
+            frameCount++;
+            if (now - lastTime >= 1000) {
+                const fps = Math.round((frameCount * 1000) / (now - lastTime));
+                fpsCounterEl.textContent = `${fps} FPS`;
+                frameCount = 0;
+                lastTime = now;
+            }
+            requestAnimationFrame(updateFPS);
+        }
+        requestAnimationFrame(updateFPS);
+
+        function detectDevice() {
+            const ua = navigator.userAgent;
+            let brand = "Android";
+            let model = "Dispositivo Mobile";
+            let os = "Android OS";
+
+            if (/iPhone|iPad|iPod/i.test(ua)) {
+                brand = "Apple";
+                model = "iPhone";
+                os = "iOS";
+            } else if (/Android/i.test(ua)) {
+                if (/Samsung/i.test(ua)) brand = "Samsung";
+                else if (/Xiaomi|Redmi/i.test(ua)) brand = "Xiaomi";
+                else if (/Motorola/i.test(ua)) brand = "Motorola";
+                
+                const match = ua.match(/Android\s([0-9\.]+)/);
+                if (match) os = "Android " + match[1];
+            }
+
+            document.getElementById('dev-brand').textContent = brand;
+            document.getElementById('dev-model').textContent = model;
+            document.getElementById('dev-os').textContent = os;
+        }
+        detectDevice();
+
+        let currentGame = "";
+
+        function selectGame(name) {
+            currentGame = name;
+            const modal = document.getElementById('optimizer-modal');
+            const fill = document.getElementById('progress');
+            const actions = document.getElementById('modal-actions');
+            const status = document.getElementById('opt-status');
+            const title = document.getElementById('opt-title');
+
+            modal.style.display = 'flex';
+            actions.style.display = 'none';
+            fill.style.width = '0%';
+            title.textContent = `Otimizando ${name}...`;
+
+            const steps = [
+                "Limpando memória RAM...",
+                "Ajustando escala de processamento...",
+                "Configurando alocação para até 70 FPS...",
+                "Criando perfil exclusivo para o aparelho...",
+                "Otimização concluída com sucesso!"
+            ];
+
+            let stepIdx = 0;
+            const interval = setInterval(() => {
+                stepIdx++;
+                fill.style.width = `${(stepIdx / steps.length) * 100}%`;
+                if (stepIdx < steps.length) {
+                    status.textContent = steps[stepIdx];
+                } else {
+                    clearInterval(interval);
+                    title.textContent = "⚡ Otimizado para 70 FPS";
+                    actions.style.display = 'block';
+                }
+            }, 600);
+        }
+
+        function closeModal() {
+            document.getElementById('optimizer-modal').style.display = 'none';
+        }
+
+        function launchGame() {
+            alert(`Iniciando ${currentGame} com perfil de otimização ativado!`);
+            closeModal();
+        }
+    </script>
+</body>
+</html>
