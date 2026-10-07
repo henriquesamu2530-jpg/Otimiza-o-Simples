@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Optimizer Pro</title>
+    <title>Game Turbo & Optimizer Pro</title>
     <style>
         :root {
-            --bg-primary: #0a0e17;
-            --bg-card: #161f30;
-            --accent-color: #00ff88;
-            --accent-blue: #00d8ff;
-            --text-main: #ffffff;
-            --text-dim: #8a99ad;
+            --bg-primary: #0a0d12;
+            --bg-card: #121824;
+            --bg-card-hover: #1a2334;
+            --cyan-accent: #00f2ff;
+            --cyan-glow: rgba(0, 242, 255, 0.25);
+            --text-main: #f0f4f8;
+            --text-dim: #7a8b9e;
+            --danger: #ff4757;
+            --success: #2ed573;
         }
 
         * {
@@ -36,129 +39,131 @@
             max-width: 420px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 16px;
         }
 
+        /* Top Bar Header */
         header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-badge {
+            background: var(--cyan-accent);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
         header h1 {
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-            color: var(--accent-color);
-            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        /* DashHUD / Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 12px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            border-color: var(--cyan-accent);
+            background: var(--bg-card-hover);
+            box-shadow: 0 0 12px var(--cyan-glow);
+        }
+
+        .action-icon {
+            font-size: 1.3rem;
+        }
+
+        .action-label {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            text-align: center;
+        }
+
+        /* Hardware Monitor HUD */
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
 
         .card {
             background: var(--bg-card);
             border-radius: 16px;
-            padding: 16px;
+            padding: 14px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
 
-        .fps-gauge {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,216,255,0.1));
-            border: 1px solid var(--accent-color);
-        }
-
-        .fps-value {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--accent-color);
-        }
-
-        .fps-target {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            text-align: right;
-        }
-
-        .device-info {
+        .stat-card {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 4px;
         }
 
-        .device-info .status {
-            display: inline-flex;
+        .stat-header {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            color: var(--accent-color);
-            background: rgba(0, 255, 136, 0.1);
-            padding: 4px 8px;
-            border-radius: 20px;
-            width: fit-content;
+            justify-content: space-between;
         }
 
-        .device-info h2 {
-            font-size: 1.1rem;
-            color: var(--text-main);
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--cyan-accent);
+            text-shadow: 0 0 8px var(--cyan-glow);
         }
 
-        .device-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 5px;
-            font-size: 0.85rem;
+        .stat-sub {
+            font-size: 0.7rem;
             color: var(--text-dim);
         }
 
-        .device-details span strong {
-            color: var(--text-main);
-        }
-
-        .perm-box {
+        /* Games List */
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
+            margin-bottom: 10px;
         }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 24px;
-        }
-
-        .switch input { opacity: 0; width: 0; height: 0; }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #2c3a4e;
-            transition: .3s;
-            border-radius: 24px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px; width: 18px;
-            left: 3px; bottom: 3px;
-            background-color: white;
-            transition: .3s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider { background-color: var(--accent-color); }
-        input:checked + .slider:before { transform: translateX(20px); }
 
         .section-title {
             font-size: 0.9rem;
-            color: var(--text-dim);
-            margin-bottom: 10px;
-            text-transform: uppercase;
+            color: var(--text-main);
+            font-weight: 700;
             letter-spacing: 0.5px;
         }
 
@@ -172,17 +177,16 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            cursor: pointer;
-            border: 1px solid transparent;
+            padding: 12px;
+            background: var(--bg-card);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.2s;
         }
 
         .game-item:hover {
-            border-color: var(--accent-blue);
-            background: rgba(0, 216, 255, 0.05);
+            border-color: var(--cyan-accent);
+            background: var(--bg-card-hover);
         }
 
         .game-meta {
@@ -192,33 +196,64 @@
         }
 
         .game-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: #2c3a4e;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #182232;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            border: 1px solid rgba(0, 242, 255, 0.2);
         }
 
+        .btn-optimize {
+            background: linear-gradient(135deg, var(--cyan-accent), #00a8ff);
+            color: #040910;
+            border: none;
+            font-weight: 800;
+            font-size: 0.75rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--cyan-glow);
+            transition: transform 0.1s;
+        }
+
+        .btn-optimize:active {
+            transform: scale(0.95);
+        }
+
+        /* Overlay Game Turbo Modal */
         .overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 14, 23, 0.95);
+            background: rgba(10, 13, 18, 0.96);
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 24px;
             z-index: 100;
             text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .turbo-badge {
+            background: rgba(0, 242, 255, 0.1);
+            color: var(--cyan-accent);
+            border: 1px solid var(--cyan-accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
         }
 
         .progress-bar {
             width: 100%;
             height: 8px;
-            background: #161f30;
+            background: #182232;
             border-radius: 4px;
             overflow: hidden;
             margin: 20px 0;
@@ -227,7 +262,8 @@
         .progress-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-color));
+            background: linear-gradient(90deg, #00a8ff, var(--cyan-accent));
+            box-shadow: 0 0 10px var(--cyan-accent);
             transition: width 0.3s;
         }
 
@@ -236,8 +272,8 @@
             padding: 14px;
             border: none;
             border-radius: 12px;
-            font-weight: bold;
-            font-size: 0.95rem;
+            font-weight: 800;
+            font-size: 0.9rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -246,8 +282,8 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent-color), #00b359);
-            color: #000;
+            background: linear-gradient(135deg, var(--cyan-accent), #00a8ff);
+            color: #040910;
         }
 
         .btn-secondary {
@@ -261,105 +297,147 @@
 <body>
 
     <div class="app-container">
+        <!-- Header -->
         <header>
-            <h1>⚡ Game Optimizer Pro</h1>
+            <div class="logo-area">
+                <h1>GAME TURBO</h1>
+                <span class="logo-badge">PRO</span>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--cyan-accent);" id="dev-model">Detectando...</div>
         </header>
 
-        <div class="card fps-gauge">
-            <div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);">DESEMPENHO ATUAL</div>
-                <div class="fps-value" id="fps-counter">--</div>
+        <!-- Quick Action Menu -->
+        <div class="quick-actions">
+            <div class="action-btn" onclick="runQuickOpt('Limpeza de RAM')">
+                <span class="action-icon">🧹</span>
+                <span class="action-label">Limpar RAM</span>
             </div>
-            <div class="fps-target">
-                <div>META: <strong>70 FPS</strong></div>
-                <div style="color: var(--accent-color);">Estabilidade: 99.4%</div>
+            <div class="action-btn" onclick="runQuickOpt('Otimização de Ping')">
+                <span class="action-icon">🌐</span>
+                <span class="action-label">Rede & Ping</span>
             </div>
-        </div>
-
-        <div class="card device-info">
-            <div class="status">✓ Aparelho Reconhecido</div>
-            <h2>Dispositivo do Proprietário</h2>
-            <div class="device-details">
-                <span>Marca: <strong id="dev-brand">Detectando...</strong></span>
-                <span>Modelo: <strong id="dev-model">Detectando...</strong></span>
-                <span>Sistema: <strong id="dev-os">Detectando...</strong></span>
-                <span>Modo: <strong>Admin Ativo</strong></span>
+            <div class="action-btn" onclick="runQuickOpt('Resfriamento de CPU')">
+                <span class="action-icon">❄️</span>
+                <span class="action-label">Resfriar</span>
+            </div>
+            <div class="action-btn" onclick="runQuickOpt('Perfil de FPS')">
+                <span class="action-icon">⚡</span>
+                <span class="action-label">Modo Turbo</span>
             </div>
         </div>
 
-        <div class="card perm-box">
-            <div>
-                <div><strong>Ajustes de Administrador</strong></div>
-                <div style="font-size: 0.75rem; color: var(--text-dim);">Otimização direta do sistema</div>
+        <!-- Monitor de Dispositivo HUD -->
+        <div class="monitor-grid">
+            <div class="card stat-card">
+                <div class="stat-header">
+                    <span>FPS Atual</span>
+                    <span style="color: var(--success)">● Vivo</span>
+                </div>
+                <div class="stat-value" id="fps-counter">--</div>
+                <div class="stat-sub">Alvo: <strong>70 FPS</strong></div>
             </div>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
+
+            <div class="card stat-card">
+                <div class="stat-header">
+                    <span>Temp. CPU</span>
+                    <span>🌡️</span>
+                </div>
+                <div class="stat-value" id="temp-counter">38°C</div>
+                <div class="stat-sub" id="temp-status" style="color: var(--success)">Estável</div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-header">
+                    <span>Memória RAM</span>
+                    <span>💾</span>
+                </div>
+                <div class="stat-value" id="ram-usage">62%</div>
+                <div class="stat-sub">Livres: 2.1 GB</div>
+            </div>
+
+            <div class="card stat-card">
+                <div class="stat-header">
+                    <span>Ping de Rede</span>
+                    <span>📡</span>
+                </div>
+                <div class="stat-value" id="ping-counter">18 ms</div>
+                <div class="stat-sub" style="color: var(--cyan-accent)">Rota Otimizada</div>
+            </div>
         </div>
 
+        <!-- Jogos Instalados -->
         <div>
-            <div class="section-title">Selecione o jogo para otimizar</div>
+            <div class="section-header">
+                <div class="section-title">Meus Jogos Otimizados</div>
+                <span style="font-size: 0.75rem; color: var(--text-dim)">4 Instalados</span>
+            </div>
+
             <div class="game-list">
-                <div class="game-item" onclick="selectGame('Free Fire')">
+                <div class="game-item">
                     <div class="game-meta">
                         <div class="game-icon">🔥</div>
                         <div>
-                            <div><strong>Free Fire</strong></div>
-                            <div style="font-size: 0.75rem; color: var(--text-dim);">Perfil: Padrão</div>
+                            <div style="font-weight: 700;">Free Fire</div>
+                            <div style="font-size: 0.75rem; color: var(--text-dim);">FPS Estável • Rota BR</div>
                         </div>
                     </div>
-                    <span>➔</span>
+                    <button class="btn-optimize" onclick="optimizeGame('Free Fire')">Otimizar</button>
                 </div>
-                <div class="game-item" onclick="selectGame('PUBG Mobile')">
+
+                <div class="game-item">
                     <div class="game-meta">
                         <div class="game-icon">🔫</div>
                         <div>
-                            <div><strong>PUBG Mobile</strong></div>
-                            <div style="font-size: 0.75rem; color: var(--text-dim);">Perfil: Padrão</div>
+                            <div style="font-weight: 700;">PUBG Mobile</div>
+                            <div style="font-size: 0.75rem; color: var(--text-dim);">Modo Turbo Ultra</div>
                         </div>
                     </div>
-                    <span>➔</span>
+                    <button class="btn-optimize" onclick="optimizeGame('PUBG Mobile')">Otimizar</button>
                 </div>
-                <div class="game-item" onclick="selectGame('Call of Duty')">
+
+                <div class="game-item">
                     <div class="game-meta">
                         <div class="game-icon">🎯</div>
                         <div>
-                            <div><strong>Call of Duty Mobile</strong></div>
-                            <div style="font-size: 0.75rem; color: var(--text-dim);">Perfil: Padrão</div>
+                            <div style="font-weight: 700;">Call of Duty</div>
+                            <div style="font-size: 0.75rem; color: var(--text-dim);">Perfil 70 FPS Act.</div>
                         </div>
                     </div>
-                    <span>➔</span>
+                    <button class="btn-optimize" onclick="optimizeGame('Call of Duty')">Otimizar</button>
                 </div>
-                <div class="game-item" onclick="selectGame('Roblox')">
+
+                <div class="game-item">
                     <div class="game-meta">
                         <div class="game-icon">🧱</div>
                         <div>
-                            <div><strong>Roblox</strong></div>
-                            <div style="font-size: 0.75rem; color: var(--text-dim);">Perfil: Padrão</div>
+                            <div style="font-weight: 700;">Roblox</div>
+                            <div style="font-size: 0.75rem; color: var(--text-dim);">Sem Lag de Render</div>
                         </div>
                     </div>
-                    <span>➔</span>
+                    <button class="btn-optimize" onclick="optimizeGame('Roblox')">Otimizar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="overlay" id="optimizer-modal">
-        <h2 id="opt-title">Otimizando...</h2>
-        <p id="opt-status" style="color: var(--text-dim); font-size: 0.85rem; margin-top: 8px;">Ajustando memória RAM...</p>
+    <!-- Overlay de Execução do Game Turbo -->
+    <div class="overlay" id="turbo-modal">
+        <div class="turbo-badge">⚡ GAME TURBO ATIVADO</div>
+        <h2 id="opt-title" style="font-size: 1.3rem;">Otimizando Sistema...</h2>
+        <p id="opt-status" style="color: var(--text-dim); font-size: 0.85rem; margin-top: 8px;">Ajustando prioridade da CPU...</p>
         
         <div class="progress-bar">
             <div class="progress-fill" id="progress"></div>
         </div>
 
         <div id="modal-actions" style="display: none; width: 100%;">
-            <button class="btn btn-primary" onclick="launchGame()">▶️ ENTRAR NO JOGO</button>
-            <button class="btn btn-secondary" onclick="closeModal()">⚙️ MENU OPTIMIZER</button>
+            <button class="btn btn-primary" onclick="launchGame()">▶️ INICIAR JOGO OTIMIZADO</button>
+            <button class="btn btn-secondary" onclick="closeModal()">⚙️ VOLTAR AO MENU</button>
         </div>
     </div>
 
     <script>
+        // 1. Contador Real de FPS
         let frameCount = 0;
         let lastTime = performance.now();
         const fpsCounterEl = document.getElementById('fps-counter');
@@ -377,36 +455,54 @@
         }
         requestAnimationFrame(updateFPS);
 
+        // 2. Simulação Dinâmica de Temperatura e Ping
+        setInterval(() => {
+            const temp = (36 + Math.random() * 4).toFixed(1);
+            const ping = Math.floor(14 + Math.random() * 8);
+            document.getElementById('temp-counter').textContent = `${temp}°C`;
+            document.getElementById('ping-counter').textContent = `${ping} ms`;
+        }, 3000);
+
+        // 3. Detecção de Modelo do Aparelho
         function detectDevice() {
             const ua = navigator.userAgent;
-            let brand = "Android";
-            let model = "Dispositivo Mobile";
-            let os = "Android OS";
+            let model = "Android Mobile";
 
-            if (/iPhone|iPad|iPod/i.test(ua)) {
-                brand = "Apple";
-                model = "iPhone";
-                os = "iOS";
-            } else if (/Android/i.test(ua)) {
-                if (/Samsung/i.test(ua)) brand = "Samsung";
-                else if (/Xiaomi|Redmi/i.test(ua)) brand = "Xiaomi";
-                else if (/Motorola/i.test(ua)) brand = "Motorola";
-                
-                const match = ua.match(/Android\s([0-9\.]+)/);
-                if (match) os = "Android " + match[1];
-            }
+            if (/iPhone/i.test(ua)) model = "Apple iPhone";
+            else if (/Samsung/i.test(ua)) model = "Samsung Galaxy";
+            else if (/Xiaomi|Redmi/i.test(ua)) model = "Xiaomi Poco/Redmi";
+            else if (/Motorola/i.test(ua)) model = "Motorola Moto";
 
-            document.getElementById('dev-brand').textContent = brand;
             document.getElementById('dev-model').textContent = model;
-            document.getElementById('dev-os').textContent = os;
         }
         detectDevice();
 
-        let currentGame = "";
+        // 4. Execução de Otimização Turbo
+        let selectedGame = "";
 
-        function selectGame(name) {
-            currentGame = name;
-            const modal = document.getElementById('optimizer-modal');
+        function optimizeGame(gameName) {
+            selectedGame = gameName;
+            startOptimizationProcess(`Otimizando ${gameName}`, [
+                "Priorizando núcleos da CPU para o jogo...",
+                "Liberando memória cache e RAM...",
+                "Ajustando estabilizador de FPS para 70 FPS...",
+                "Otimizando rotas de rede para ping baixo...",
+                "Game Turbo aplicado com sucesso!"
+            ]);
+        }
+
+        function runQuickOpt(optType) {
+            selectedGame = "Sistema";
+            startOptimizationProcess(`Executando ${optType}`, [
+                "Escaneando processos em segundo plano...",
+                "Fechando tarefas desnecessárias...",
+                "Aplicando perfil de desempenho...",
+                "Ajustes concluídos!"
+            ]);
+        }
+
+        function startOptimizationProcess(titleText, steps) {
+            const modal = document.getElementById('turbo-modal');
             const fill = document.getElementById('progress');
             const actions = document.getElementById('modal-actions');
             const status = document.getElementById('opt-status');
@@ -415,15 +511,7 @@
             modal.style.display = 'flex';
             actions.style.display = 'none';
             fill.style.width = '0%';
-            title.textContent = `Otimizando ${name}...`;
-
-            const steps = [
-                "Limpando memória RAM...",
-                "Ajustando escala de processamento...",
-                "Configurando alocação para até 70 FPS...",
-                "Criando perfil exclusivo para o aparelho...",
-                "Otimização concluída com sucesso!"
-            ];
+            title.textContent = titleText;
 
             let stepIdx = 0;
             const interval = setInterval(() => {
@@ -433,20 +521,21 @@
                     status.textContent = steps[stepIdx];
                 } else {
                     clearInterval(interval);
-                    title.textContent = "⚡ Otimizado para 70 FPS";
+                    title.textContent = "⚡ Otimização Concluída!";
                     actions.style.display = 'block';
                 }
-            }, 600);
+            }, 500);
         }
 
         function closeModal() {
-            document.getElementById('optimizer-modal').style.display = 'none';
+            document.getElementById('turbo-modal').style.display = 'none';
         }
 
         function launchGame() {
-            alert(`Iniciando ${currentGame} com perfil de otimização ativado!`);
+            alert(`Iniciando ${selectedGame} em Modo Turbo!`);
             closeModal();
         }
     </script>
 </body>
-</html>
+    </html>
+    
