@@ -2,8 +2,10 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Turbo & Optimizer Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0d12">
+    <title>GAME TURBO PRO — NEXA BOOST</title>
+
     <style>
         :root {
             --bg-primary: #0a0d12;
@@ -15,13 +17,14 @@
             --text-dim: #7a8b9e;
             --danger: #ff4757;
             --success: #2ed573;
+            --line: rgba(255, 255, 255, 0.08);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: Inter, Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -32,199 +35,303 @@
             justify-content: center;
             min-height: 100vh;
             padding: 15px;
+            overflow-x: hidden;
         }
 
         .app-container {
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
 
-        /* Top Bar Header */
+        /* ----- TELA DE LOGIN ----- */
+        .login-screen {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-primary);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 360px;
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: radial-gradient(circle at 50% 35%, #5ceaff 0, #00f2ff 30%, #07536c 70%, #0a0d12 100%);
+            box-shadow: 0 0 25px var(--cyan-glow);
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+            color: #00131b;
+            font-size: 1.4rem;
+            margin: 0 auto 16px;
+        }
+
+        .login-input {
+            width: 100%;
+            background: #0a111a;
+            border: 1px solid var(--line);
+            color: var(--text-main);
+            border-radius: 12px;
+            padding: 14px;
+            outline: none;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            transition: border-color 0.2s;
+        }
+
+        .login-input:focus {
+            border-color: var(--cyan-accent);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--cyan-accent), #009bc6);
+            color: #001018;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px var(--cyan-glow);
+            margin-top: 6px;
+        }
+
+        /* ----- TOP HEADER ----- */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+            padding: 6px 0 12px;
+            border-bottom: 1px solid var(--line);
         }
 
-        .logo-area {
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: radial-gradient(circle at 50% 35%, #5ceaff 0, #00f2ff 30%, #07536c 70%, #0a0d12 100%);
+            box-shadow: 0 0 20px var(--cyan-glow);
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+            color: #00131b;
+            font-size: 1rem;
+        }
+
+        .brand-text h1 {
+            font-size: 1.1rem;
+            letter-spacing: 0.8px;
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        .brand-text p {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 1.2px;
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
+            color: var(--success);
+            border: 1px solid rgba(46, 213, 115, 0.3);
+            background: rgba(46, 213, 115, 0.08);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        /* ----- CARDS BASE ----- */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 15px;
+            border: 1px solid var(--line);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+        }
+
+        /* ----- ADICIONAR JOGOS ----- */
+        .add-game-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .input-game-name {
+            flex: 1;
+            background: #0a111a;
+            border: 1px solid var(--line);
+            color: var(--text-main);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .btn-add-game {
+            background: var(--cyan-accent);
+            color: #000;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .game-card-item {
+            background: #0a1119;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .game-card-meta {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .logo-badge {
-            background: var(--cyan-accent);
-            color: #000;
-            font-size: 0.7rem;
-            font-weight: 900;
-            padding: 2px 6px;
-            border-radius: 4px;
+        .game-card-icon {
+            font-size: 1.2rem;
         }
 
-        header h1 {
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-            color: var(--text-main);
+        .game-card-title {
+            font-size: 0.8rem;
             font-weight: 700;
         }
 
-        /* DashHUD / Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
-        .action-btn {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
-            padding: 12px 6px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .action-btn:hover {
-            border-color: var(--cyan-accent);
-            background: var(--bg-card-hover);
-            box-shadow: 0 0 12px var(--cyan-glow);
-        }
-
-        .action-icon {
-            font-size: 1.3rem;
-        }
-
-        .action-label {
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            text-align: center;
-        }
-
-        /* Hardware Monitor HUD */
-        .monitor-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-        }
-
-        .stat-card {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .stat-header {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .stat-value {
-            font-size: 1.6rem;
-            font-weight: 800;
+        .btn-opt-mini {
+            background: rgba(0, 242, 255, 0.15);
             color: var(--cyan-accent);
-            text-shadow: 0 0 8px var(--cyan-glow);
+            border: 1px solid var(--cyan-accent);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            cursor: pointer;
         }
 
-        .stat-sub {
-            font-size: 0.7rem;
-            color: var(--text-dim);
+        /* ----- CONTROLES GAME TURBO ----- */
+        .control-group {
+            margin-bottom: 14px;
         }
 
-        /* Games List */
-        .section-header {
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .control-slider {
+            width: 100%;
+            accent-color: var(--cyan-accent);
+        }
+
+        .toggle-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            font-size: 0.8rem;
         }
 
-        .section-title {
-            font-size: 0.9rem;
-            color: var(--text-main);
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .game-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .game-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px;
-            background: var(--bg-card);
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.2s;
-        }
-
-        .game-item:hover {
-            border-color: var(--cyan-accent);
-            background: var(--bg-card-hover);
-        }
-
-        .game-meta {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .game-icon {
+        .switch {
             width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: #182232;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            border: 1px solid rgba(0, 242, 255, 0.2);
-        }
-
-        .btn-optimize {
-            background: linear-gradient(135deg, var(--cyan-accent), #00a8ff);
-            color: #040910;
-            border: none;
-            font-weight: 800;
-            font-size: 0.75rem;
-            padding: 8px 16px;
+            height: 24px;
             border-radius: 20px;
+            background: #263342;
+            padding: 2px;
             cursor: pointer;
-            box-shadow: 0 0 10px var(--cyan-glow);
-            transition: transform 0.1s;
+            transition: background 0.2s;
         }
 
-        .btn-optimize:active {
-            transform: scale(0.95);
+        .switch i {
+            display: block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform 0.2s;
         }
 
-        /* Overlay Game Turbo Modal */
+        .switch.on { background: var(--cyan-accent); }
+        .switch.on i { transform: translateX(20px); }
+
+        /* ----- DASHBOARD FPS ----- */
+        .hero-fps {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 16px 15px;
+        }
+
+        .fps-display {
+            font-size: 3.2rem;
+            line-height: 1;
+            font-weight: 900;
+            color: var(--cyan-accent);
+            letter-spacing: -1px;
+            text-shadow: 0 0 15px var(--cyan-glow);
+        }
+
+        .fps-display small {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* ----- OVERLAY MODAL ----- */
         .overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -237,17 +344,6 @@
             z-index: 100;
             text-align: center;
             backdrop-filter: blur(8px);
-        }
-
-        .turbo-badge {
-            background: rgba(0, 242, 255, 0.1);
-            color: var(--cyan-accent);
-            border: 1px solid var(--cyan-accent);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-bottom: 12px;
         }
 
         .progress-bar {
@@ -267,7 +363,7 @@
             transition: width 0.3s;
         }
 
-        .btn {
+        .btn-modal {
             width: 100%;
             padding: 14px;
             border: none;
@@ -281,261 +377,253 @@
             gap: 8px;
         }
 
-        .btn-primary {
+        .btn-modal-primary {
             background: linear-gradient(135deg, var(--cyan-accent), #00a8ff);
             color: #040910;
         }
 
-        .btn-secondary {
+        .btn-modal-secondary {
             background: var(--bg-card);
             color: var(--text-main);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--line);
             margin-top: 10px;
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 20px;
+            transform: translate(-50%, 20px);
+            background: var(--bg-card);
+            border: 1px solid var(--cyan-accent);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.25s;
+            z-index: 200;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
         }
     </style>
 </head>
 <body>
 
+    <!-- TELA DE LOGIN BLOQUEADA -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">NEXA</div>
+            <h2 style="font-size: 1.2rem; margin-bottom: 6px;">Game Turbo Lock</h2>
+            <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 20px;">Digite suas credenciais para aceder ao otimizador</p>
+            
+            <input type="text" class="login-input" id="loginUser" placeholder="Login">
+            <input type="password" class="login-input" id="loginPass" placeholder="Senha">
+            
+            <button class="btn-login" onclick="validateLogin()">ENTRAR NO APP</button>
+        </div>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL DO APLICATIVO -->
     <div class="app-container">
-        <!-- Header -->
         <header>
-            <div class="logo-area">
-                <h1>GAME TURBO</h1>
-                <span class="logo-badge">PRO</span>
+            <div class="brand">
+                <div class="logo">NX</div>
+                <div class="brand-text">
+                    <h1>NEXA BOOST</h1>
+                    <p>GAME TURBO PRO</p>
+                </div>
             </div>
-            <div style="font-size: 0.75rem; color: var(--cyan-accent);" id="dev-model">Detectando...</div>
+            <div class="status-badge">● AUTENTICADO</div>
         </header>
 
-        <!-- Quick Action Menu -->
-        <div class="quick-actions">
-            <div class="action-btn" onclick="runQuickOpt('Limpeza de RAM')">
-                <span class="action-icon">🧹</span>
-                <span class="action-label">Limpar RAM</span>
-            </div>
-            <div class="action-btn" onclick="runQuickOpt('Otimização de Ping')">
-                <span class="action-icon">🌐</span>
-                <span class="action-label">Rede & Ping</span>
-            </div>
-            <div class="action-btn" onclick="runQuickOpt('Resfriamento de CPU')">
-                <span class="action-icon">❄️</span>
-                <span class="action-label">Resfriar</span>
-            </div>
-            <div class="action-btn" onclick="runQuickOpt('Perfil de FPS')">
-                <span class="action-icon">⚡</span>
-                <span class="action-label">Modo Turbo</span>
-            </div>
-        </div>
+        <!-- DASHBOARD FPS -->
+        <section class="card hero-fps">
+            <div class="card-title">Monitoramento de Desempenho</div>
+            <div class="fps-display" id="fpsDisplay">--<small> FPS</small></div>
+            <div style="font-size: 0.65rem; color: var(--text-dim); margin-top: 4px;">Taxa de quadros do dispositivo em tempo real</div>
+        </section>
 
-        <!-- Monitor de Dispositivo HUD -->
-        <div class="monitor-grid">
-            <div class="card stat-card">
-                <div class="stat-header">
-                    <span>FPS Atual</span>
-                    <span style="color: var(--success)">● Vivo</span>
-                </div>
-                <div class="stat-value" id="fps-counter">--</div>
-                <div class="stat-sub">Alvo: <strong>70 FPS</strong></div>
+        <!-- SEÇÃO: ADICIONAR E SELECIONAR JOGOS -->
+        <section class="card">
+            <div class="card-header">
+                <span class="card-title">Meus Jogos & Apps</span>
+            </div>
+            <div class="add-game-form">
+                <input type="text" class="input-game-name" id="newGameName" placeholder="Nome do jogo ou app...">
+                <button class="btn-add-game" onclick="addCustomGame()">+ Add</button>
             </div>
 
-            <div class="card stat-card">
-                <div class="stat-header">
-                    <span>Temp. CPU</span>
-                    <span>🌡️</span>
-                </div>
-                <div class="stat-value" id="temp-counter">38°C</div>
-                <div class="stat-sub" id="temp-status" style="color: var(--success)">Estável</div>
-            </div>
-
-            <div class="card stat-card">
-                <div class="stat-header">
-                    <span>Memória RAM</span>
-                    <span>💾</span>
-                </div>
-                <div class="stat-value" id="ram-usage">62%</div>
-                <div class="stat-sub">Livres: 2.1 GB</div>
-            </div>
-
-            <div class="card stat-card">
-                <div class="stat-header">
-                    <span>Ping de Rede</span>
-                    <span>📡</span>
-                </div>
-                <div class="stat-value" id="ping-counter">18 ms</div>
-                <div class="stat-sub" style="color: var(--cyan-accent)">Rota Otimizada</div>
-            </div>
-        </div>
-
-        <!-- Jogos Instalados -->
-        <div>
-            <div class="section-header">
-                <div class="section-title">Meus Jogos Otimizados</div>
-                <span style="font-size: 0.75rem; color: var(--text-dim)">4 Instalados</span>
-            </div>
-
-            <div class="game-list">
-                <div class="game-item">
-                    <div class="game-meta">
-                        <div class="game-icon">🔥</div>
-                        <div>
-                            <div style="font-weight: 700;">Free Fire</div>
-                            <div style="font-size: 0.75rem; color: var(--text-dim);">FPS Estável • Rota BR</div>
-                        </div>
+            <div class="game-grid" id="gameGrid">
+                <div class="game-card-item">
+                    <div class="game-card-meta">
+                        <span class="game-card-icon">🔥</span>
+                        <span class="game-card-title">Free Fire</span>
                     </div>
-                    <button class="btn-optimize" onclick="optimizeGame('Free Fire')">Otimizar</button>
+                    <button class="btn-opt-mini" onclick="optimizeGame('Free Fire')">Otimizar</button>
                 </div>
-
-                <div class="game-item">
-                    <div class="game-meta">
-                        <div class="game-icon">🔫</div>
-                        <div>
-                            <div style="font-weight: 700;">PUBG Mobile</div>
-                            <div style="font-size: 0.75rem; color: var(--text-dim);">Modo Turbo Ultra</div>
-                        </div>
+                <div class="game-card-item">
+                    <div class="game-card-meta">
+                        <span class="game-card-icon">🔫</span>
+                        <span class="game-card-title">PUBG</span>
                     </div>
-                    <button class="btn-optimize" onclick="optimizeGame('PUBG Mobile')">Otimizar</button>
-                </div>
-
-                <div class="game-item">
-                    <div class="game-meta">
-                        <div class="game-icon">🎯</div>
-                        <div>
-                            <div style="font-weight: 700;">Call of Duty</div>
-                            <div style="font-size: 0.75rem; color: var(--text-dim);">Perfil 70 FPS Act.</div>
-                        </div>
-                    </div>
-                    <button class="btn-optimize" onclick="optimizeGame('Call of Duty')">Otimizar</button>
-                </div>
-
-                <div class="game-item">
-                    <div class="game-meta">
-                        <div class="game-icon">🧱</div>
-                        <div>
-                            <div style="font-weight: 700;">Roblox</div>
-                            <div style="font-size: 0.75rem; color: var(--text-dim);">Sem Lag de Render</div>
-                        </div>
-                    </div>
-                    <button class="btn-optimize" onclick="optimizeGame('Roblox')">Otimizar</button>
+                    <button class="btn-opt-mini" onclick="optimizeGame('PUBG Mobile')">Otimizar</button>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- PAINEL DE CONTROLES GAME TURBO (ESTILO POPUP DA FOTO) -->
+        <section class="card">
+            <div class="card-title" style="margin-bottom: 14px;">Ajustes de Desempenho</div>
+            
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Taxa de Quadros (FPS Target)</span>
+                    <strong id="fpsVal">120 FPS</strong>
+                </div>
+                <input type="range" class="control-slider" min="60" max="120" step="10" value="120" oninput="document.getElementById('fpsVal').textContent = this.value + ' FPS'">
+            </div>
+
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Resolução de Renderização</span>
+                    <strong id="resVal">1080p (Alta)</strong>
+                </div>
+                <input type="range" class="control-slider" min="1" max="3" value="3" oninput="updateResLabel(this.value)">
+            </div>
+
+            <div class="toggle-row">
+                <span>Rastreamento de Gestos Rápidos</span>
+                <div class="switch on" onclick="this.classList.toggle('on')"><i></i></div>
+            </div>
+
+            <div class="toggle-row">
+                <span>Algoritmo de Estabilização de FPS</span>
+                <div class="switch on" onclick="this.classList.toggle('on')"><i></i></div>
+            </div>
+
+            <div class="toggle-row">
+                <span>Sensibilidade a Gestos Pequenos</span>
+                <div class="switch on" onclick="this.classList.toggle('on')"><i></i></div>
+            </div>
+        </section>
     </div>
 
-    <!-- Overlay de Execução do Game Turbo -->
-    <div class="overlay" id="turbo-modal">
-        <div class="turbo-badge">⚡ GAME TURBO ATIVADO</div>
-        <h2 id="opt-title" style="font-size: 1.3rem;">Otimizando Sistema...</h2>
-        <p id="opt-status" style="color: var(--text-dim); font-size: 0.85rem; margin-top: 8px;">Ajustando prioridade da CPU...</p>
+    <!-- OVERLAY DE ANIMAÇÃO DE OTIMIZAÇÃO -->
+    <div class="overlay" id="optOverlay">
+        <div style="background: rgba(0, 242, 255, 0.1); color: var(--cyan-accent); border: 1px solid var(--cyan-accent); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;">⚡ NEXA TURBO</div>
+        <h2 id="optTitle" style="font-size: 1.2rem;">Otimizando...</h2>
+        <p id="optStatus" style="color: var(--text-dim); font-size: 0.8rem; margin-top: 6px;">Ajustando parâmetros do jogo...</p>
         
         <div class="progress-bar">
-            <div class="progress-fill" id="progress"></div>
+            <div class="progress-fill" id="progressFill"></div>
         </div>
 
-        <div id="modal-actions" style="display: none; width: 100%;">
-            <button class="btn btn-primary" onclick="launchGame()">▶️ INICIAR JOGO OTIMIZADO</button>
-            <button class="btn btn-secondary" onclick="closeModal()">⚙️ VOLTAR AO MENU</button>
+        <div id="modalActions" style="display: none; width: 100%;">
+            <button class="btn-modal btn-modal-primary" onclick="launchGame()">▶️ ABRIR JOGO OTIMIZADO</button>
+            <button class="btn-modal btn-modal-secondary" onclick="closeModal()">⚙️ VOLTAR AO PAINEL</button>
         </div>
     </div>
 
+    <div class="toast" id="toast"></div>
+
     <script>
-        // 1. Contador Real de FPS
-        let frameCount = 0;
-        let lastTime = performance.now();
-        const fpsCounterEl = document.getElementById('fps-counter');
+        "use strict";
 
-        function updateFPS() {
-            const now = performance.now();
-            frameCount++;
-            if (now - lastTime >= 1000) {
-                const fps = Math.round((frameCount * 1000) / (now - lastTime));
-                fpsCounterEl.textContent = `${fps} FPS`;
-                frameCount = 0;
-                lastTime = now;
+        const $ = id => document.getElementById(id);
+        let currentGame = "";
+
+        // Validar Login
+        function validateLogin() {
+            const user = $("loginUser").value;
+            const pass = $("loginPass").value;
+
+            if (user === "Nexa2525" && pass === "25459910") {
+                $("loginScreen").style.display = "none";
+                showToast("Acesso autorizado!");
+            } else {
+                alert("Login ou senha incorretos!");
             }
-            requestAnimationFrame(updateFPS);
-        }
-        requestAnimationFrame(updateFPS);
-
-        // 2. Simulação Dinâmica de Temperatura e Ping
-        setInterval(() => {
-            const temp = (36 + Math.random() * 4).toFixed(1);
-            const ping = Math.floor(14 + Math.random() * 8);
-            document.getElementById('temp-counter').textContent = `${temp}°C`;
-            document.getElementById('ping-counter').textContent = `${ping} ms`;
-        }, 3000);
-
-        // 3. Detecção de Modelo do Aparelho
-        function detectDevice() {
-            const ua = navigator.userAgent;
-            let model = "Android Mobile";
-
-            if (/iPhone/i.test(ua)) model = "Apple iPhone";
-            else if (/Samsung/i.test(ua)) model = "Samsung Galaxy";
-            else if (/Xiaomi|Redmi/i.test(ua)) model = "Xiaomi Poco/Redmi";
-            else if (/Motorola/i.test(ua)) model = "Motorola Moto";
-
-            document.getElementById('dev-model').textContent = model;
-        }
-        detectDevice();
-
-        // 4. Execução de Otimização Turbo
-        let selectedGame = "";
-
-        function optimizeGame(gameName) {
-            selectedGame = gameName;
-            startOptimizationProcess(`Otimizando ${gameName}`, [
-                "Priorizando núcleos da CPU para o jogo...",
-                "Liberando memória cache e RAM...",
-                "Ajustando estabilizador de FPS para 70 FPS...",
-                "Otimizando rotas de rede para ping baixo...",
-                "Game Turbo aplicado com sucesso!"
-            ]);
         }
 
-        function runQuickOpt(optType) {
-            selectedGame = "Sistema";
-            startOptimizationProcess(`Executando ${optType}`, [
-                "Escaneando processos em segundo plano...",
-                "Fechando tarefas desnecessárias...",
-                "Aplicando perfil de desempenho...",
-                "Ajustes concluídos!"
-            ]);
+        // Toast Helper
+        function showToast(msg) {
+            const el = $("toast");
+            el.textContent = msg;
+            el.classList.add("show");
+            clearTimeout(window.__toastTimer);
+            window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
         }
 
-        function startOptimizationProcess(titleText, steps) {
-            const modal = document.getElementById('turbo-modal');
-            const fill = document.getElementById('progress');
-            const actions = document.getElementById('modal-actions');
-            const status = document.getElementById('opt-status');
-            const title = document.getElementById('opt-title');
+        // Leitor Real de FPS
+        let frameCounter = 0;
+        let lastFrameTime = performance.now();
+        function calcFPS(now) {
+            frameCounter++;
+            if (now - lastFrameTime >= 1000) {
+                const fps = Math.round((frameCounter * 1000) / (now - lastFrameTime));
+                $("fpsDisplay").innerHTML = `${fps}<small> FPS</small>`;
+                frameCounter = 0;
+                lastFrameTime = now;
+            }
+            requestAnimationFrame(calcFPS);
+        }
+        requestAnimationFrame(calcFPS);
 
-            modal.style.display = 'flex';
-            actions.style.display = 'none';
-            fill.style.width = '0%';
-            title.textContent = titleText;
+        // Adicionar Jogos Personalizados
+        function addCustomGame() {
+            const input = $("newGameName");
+            const name = input.value.trim();
+            if (!name) return;
 
-            let stepIdx = 0;
-            const interval = setInterval(() => {
-                stepIdx++;
-                fill.style.width = `${(stepIdx / steps.length) * 100}%`;
-                if (stepIdx < steps.length) {
-                    status.textContent = steps[stepIdx];
-                } else {
-                    clearInterval(interval);
-                    title.textContent = "⚡ Otimização Concluída!";
-                    actions.style.display = 'block';
-                }
-            }, 500);
+            const grid = $("gameGrid");
+            const icons = ["🎮", "🕹️", "⚔️", "🏎️", "⚽", "👾"];
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+
+            const item = document.createElement("div");
+            item.className = "game-card-item";
+            item.innerHTML = `
+                <div class="game-card-meta">
+                    <span class="game-card-icon">${randomIcon}</span>
+                    <span class="game-card-title">${name}</span>
+                </div>
+                <button class="btn-opt-mini" onclick="optimizeGame('${name}')">Otimizar</button>
+            `;
+
+            grid.appendChild(item);
+            input.value = "";
+            showToast(`${name} adicionado!`);
         }
 
-        function closeModal() {
-            document.getElementById('turbo-modal').style.display = 'none';
+        function updateResLabel(val) {
+            const labels = { "1": "720p (Desempenho)", "2": "900p (Equilibrado)", "3": "1080p (Alta)" };
+            $("resVal").textContent = labels[val];
         }
 
-        function launchGame() {
-            alert(`Iniciando ${selectedGame} em Modo Turbo!`);
-            closeModal();
-        }
-    </script>
-</body>
-    </html>
-    
+        // Otimização
+        function optimizeGame(name) {
+            currentGame = name;
+            const modal = $("optOverlay");
+            const fill = $("progressFill");
+            const actions = $("modalActions");
+            const status = $("optStatus");
+            const title = $("optTitle");
+
+            modal.style.display = "flex";
+            actions.style.display = "none";
+            fill.style.width = "0%";
+            title.textContent = `Otimizando ${name}`;
+
+            const steps = [
+                "Ajustando resolução e filtros...",
+                "Aplicando taxa de quadros personalizada...",
+                "Otimizando rastreamento de toques...",
+                "Perfil carregado!"
+            ];
+
+            l
