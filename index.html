@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0a0d12">
     <title>GAME TURBO PRO — NEXA BOOST</title>
+    
+    <!-- Ícone do Aplicativo / Favicon -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co/3ykXJzM/29117.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/3ykXJzM/29117.png">
 
     <style>
         :root {
@@ -46,7 +50,7 @@
             gap: 14px;
         }
 
-        /* ----- TELA DE LOGIN ----- */
+        /* TELA DE LOGIN */
         .login-screen {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -70,18 +74,13 @@
             text-align: center;
         }
 
-        .login-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
-            background: radial-gradient(circle at 50% 35%, #5ceaff 0, #00f2ff 30%, #07536c 70%, #0a0d12 100%);
-            box-shadow: 0 0 25px var(--cyan-glow);
-            display: grid;
-            place-items: center;
-            font-weight: 900;
-            color: #00131b;
-            font-size: 1.4rem;
-            margin: 0 auto 16px;
+        .app-icon-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            object-fit: contain;
+            margin-bottom: 14px;
+            filter: drop-shadow(0 0 12px var(--cyan-glow));
         }
 
         .login-input {
@@ -115,7 +114,11 @@
             margin-top: 6px;
         }
 
-        /* ----- TOP HEADER ----- */
+        .btn-login:active {
+            transform: scale(0.98);
+        }
+
+        /* HEADER */
         header {
             display: flex;
             justify-content: space-between;
@@ -130,17 +133,12 @@
             gap: 10px;
         }
 
-        .logo {
+        .header-icon {
             width: 42px;
             height: 42px;
             border-radius: 12px;
-            background: radial-gradient(circle at 50% 35%, #5ceaff 0, #00f2ff 30%, #07536c 70%, #0a0d12 100%);
-            box-shadow: 0 0 20px var(--cyan-glow);
-            display: grid;
-            place-items: center;
-            font-weight: 900;
-            color: #00131b;
-            font-size: 1rem;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px var(--cyan-glow));
         }
 
         .brand-text h1 {
@@ -166,7 +164,7 @@
             font-weight: 700;
         }
 
-        /* ----- CARDS BASE ----- */
+        /* CARDS */
         .card {
             background: var(--bg-card);
             border-radius: 16px;
@@ -190,7 +188,7 @@
             font-weight: 700;
         }
 
-        /* ----- ADICIONAR JOGOS ----- */
+        /* ADICIONAR JOGOS */
         .add-game-form {
             display: flex;
             gap: 8px;
@@ -261,7 +259,7 @@
             cursor: pointer;
         }
 
-        /* ----- CONTROLES GAME TURBO ----- */
+        /* CONTROLES */
         .control-group {
             margin-bottom: 14px;
         }
@@ -309,7 +307,7 @@
         .switch.on { background: var(--cyan-accent); }
         .switch.on i { transform: translateX(20px); }
 
-        /* ----- DASHBOARD FPS ----- */
+        /* DASHBOARD FPS */
         .hero-fps {
             text-align: center;
             position: relative;
@@ -331,7 +329,7 @@
             color: var(--text-dim);
         }
 
-        /* ----- OVERLAY MODAL ----- */
+        /* OVERLAY MODAL */
         .overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -418,22 +416,24 @@
     <!-- TELA DE LOGIN BLOQUEADA -->
     <div class="login-screen" id="loginScreen">
         <div class="login-card">
-            <div class="login-logo">NEXA</div>
+            <!-- ÍCONE DO APP NA TELA DE LOGIN -->
+            <img src="https://i.ibb.co/3ykXJzM/29117.png" alt="App Icon" class="app-icon-img">
             <h2 style="font-size: 1.2rem; margin-bottom: 6px;">Game Turbo Lock</h2>
             <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 20px;">Digite suas credenciais para aceder ao otimizador</p>
             
-            <input type="text" class="login-input" id="loginUser" placeholder="Login">
+            <input type="text" class="login-input" id="loginUser" placeholder="Login" autocomplete="off" autocorrect="off" autocapitalize="none">
             <input type="password" class="login-input" id="loginPass" placeholder="Senha">
             
-            <button class="btn-login" onclick="validateLogin()">ENTRAR NO APP</button>
+            <button class="btn-login" id="btnLogin" onclick="validateLogin()">ENTRAR NO APP</button>
         </div>
     </div>
 
-    <!-- CONTEÚDO PRINCIPAL DO APLICATIVO -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <div class="app-container">
         <header>
             <div class="brand">
-                <div class="logo">NX</div>
+                <!-- ÍCONE DO APP NO HEADER -->
+                <img src="https://i.ibb.co/3ykXJzM/29117.png" alt="App Logo" class="header-icon">
                 <div class="brand-text">
                     <h1>NEXA BOOST</h1>
                     <p>GAME TURBO PRO</p>
@@ -449,7 +449,7 @@
             <div style="font-size: 0.65rem; color: var(--text-dim); margin-top: 4px;">Taxa de quadros do dispositivo em tempo real</div>
         </section>
 
-        <!-- SEÇÃO: ADICIONAR E SELECIONAR JOGOS -->
+        <!-- SEÇÃO: JOGOS -->
         <section class="card">
             <div class="card-header">
                 <span class="card-title">Meus Jogos & Apps</span>
@@ -477,7 +477,7 @@
             </div>
         </section>
 
-        <!-- PAINEL DE CONTROLES GAME TURBO (ESTILO POPUP DA FOTO) -->
+        <!-- PAINEL DE CONTROLES GAME TURBO -->
         <section class="card">
             <div class="card-title" style="margin-bottom: 14px;">Ajustes de Desempenho</div>
             
@@ -514,8 +514,9 @@
         </section>
     </div>
 
-    <!-- OVERLAY DE ANIMAÇÃO DE OTIMIZAÇÃO -->
+    <!-- OVERLAY DE ANIMAÇÃO -->
     <div class="overlay" id="optOverlay">
+        <img src="https://i.ibb.co/3ykXJzM/29117.png" alt="App Logo" style="width: 60px; height: 60px; margin-bottom: 10px; filter: drop-shadow(0 0 10px var(--cyan-accent));">
         <div style="background: rgba(0, 242, 255, 0.1); color: var(--cyan-accent); border: 1px solid var(--cyan-accent); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 12px;">⚡ NEXA TURBO</div>
         <h2 id="optTitle" style="font-size: 1.2rem;">Otimizando...</h2>
         <p id="optStatus" style="color: var(--text-dim); font-size: 0.8rem; margin-top: 6px;">Ajustando parâmetros do jogo...</p>
@@ -538,18 +539,26 @@
         const $ = id => document.getElementById(id);
         let currentGame = "";
 
-        // Validar Login
+        // Validar Login (Tratamento de maiúsculas/minúsculas e espaços)
         function validateLogin() {
-            const user = $("loginUser").value;
-            const pass = $("loginPass").value;
+            const user = ($("loginUser").value || "").trim().toLowerCase();
+            const pass = ($("loginPass").value || "").trim();
 
-            if (user === "Nexa2525" && pass === "25459910") {
+            if (user === "nexa2525" && pass === "25459910") {
                 $("loginScreen").style.display = "none";
                 showToast("Acesso autorizado!");
             } else {
-                alert("Login ou senha incorretos!");
+                alert("Login ou senha incorretos! Verifique maiúsculas e minúsculas.");
             }
         }
+
+        // Suporte para Tecla Enter nos campos de texto
+        $("loginUser").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") validateLogin();
+        });
+        $("loginPass").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") validateLogin();
+        });
 
         // Toast Helper
         function showToast(msg) {
@@ -609,21 +618,4 @@
         function optimizeGame(name) {
             currentGame = name;
             const modal = $("optOverlay");
-            const fill = $("progressFill");
-            const actions = $("modalActions");
-            const status = $("optStatus");
-            const title = $("optTitle");
-
-            modal.style.display = "flex";
-            actions.style.display = "none";
-            fill.style.width = "0%";
-            title.textContent = `Otimizando ${name}`;
-
-            const steps = [
-                "Ajustando resolução e filtros...",
-                "Aplicando taxa de quadros personalizada...",
-                "Otimizando rastreamento de toques...",
-                "Perfil carregado!"
-            ];
-
-            l
+            const fill = $("progress
