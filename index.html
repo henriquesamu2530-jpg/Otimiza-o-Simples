@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0a0d12">
-    <title>GAME TURBO PRO — NEXA BOOST</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>GAME TURBO — CUSTOM LAUNCHER</title>
 
     <style>
         :root {
@@ -46,7 +48,6 @@
             gap: 14px;
         }
 
-        /* HEADER */
         header {
             display: flex;
             justify-content: space-between;
@@ -58,21 +59,513 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
-        /* SVG LOGO NATIVA DO CAVALO & RAIO */
-        .header-logo-svg {
-            width: 44px;
-            height: 44px;
-            background: rgba(0, 242, 255, 0.05);
-            border: 1px solid var(--cyan-accent);
+        .logo {
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
-            padding: 6px;
-            box-shadow: 0 0 12px var(--cyan-glow);
+            background: radial-gradient(circle at 50% 35%, #5ceaff 0, #00f2ff 30%, #07536c 70%, #0a0d12 100%);
+            box-shadow: 0 0 20px var(--cyan-glow);
+            display: grid;
+            place-items: center;
+            font-weight: 900;
+            color: #00131b;
+            font-size: 1rem;
         }
 
         .brand-text h1 {
             font-size: 1.1rem;
             letter-spacing: 0.8px;
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        .brand-text p {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 1.2px;
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
+            color: var(--success);
+            border: 1px solid rgba(46, 213, 115, 0.3);
+            background: rgba(46, 213, 115, 0.08);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 15px;
+            border: 1px solid var(--line);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+        }
+
+        .btn-add-game {
+            background: rgba(0, 242, 255, 0.1);
+            color: var(--cyan-accent);
+            border: 1px solid var(--cyan-accent);
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .hero-fps {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 18px 15px;
+        }
+
+        .hero-fps::before {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--cyan-glow);
+            filter: blur(50px);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .fps-display {
+            position: relative;
+            font-size: 3.2rem;
+            line-height: 1;
+            font-weight: 900;
+            color: var(--cyan-accent);
+            letter-spacing: -1px;
+            text-shadow: 0 0 15px var(--cyan-glow);
+        }
+
+        .fps-display small {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* Lista de Jogos Customizável */
+        .game-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .game-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            transition: all 0.2s;
+        }
+
+        .game-item:hover {
+            border-color: var(--cyan-accent);
+            background: var(--bg-card-hover);
+        }
+
+        .game-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .game-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #182232;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+        }
+
+        .game-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-opt {
+            background: linear-gradient(135deg, var(--cyan-accent), #00a8ff);
+            color: #040910;
+            border: none;
+            font-weight: 800;
+            font-size: 0.75rem;
+            padding: 8px 14px;
+            border-radius: 18px;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--cyan-glow);
+        }
+
+        .btn-del {
+            background: rgba(255, 71, 87, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Configurações Estilo Game Turbo (Gpu / Sensibilidade) */
+        .range-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .range-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--cyan-accent);
+            background: #182232;
+            border-radius: 8px;
+            height: 6px;
+        }
+
+        /* Modal Generico */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 13, 18, 0.96);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 360px;
+            background: var(--bg-card);
+            border: 1px solid var(--cyan-accent);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-field {
+            width: 100%;
+            background: #0a111a;
+            border: 1px solid var(--line);
+            color: var(--text-main);
+            border-radius: 10px;
+            padding: 12px;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-modal {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cyan-accent), #00a8ff);
+            color: #040910;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--line);
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 20px;
+            transform: translate(-50%, 20px);
+            background: var(--bg-card);
+            border: 1px solid var(--cyan-accent);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.25s;
+            z-index: 200;
+            white-space: nowrap;
+        }
+
+        .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <div class="brand">
+                <div class="logo">GT</div>
+                <div class="brand-text">
+                    <h1>GAME TURBO</h1>
+                    <p>CUSTOM LAUNCHER</p>
+                </div>
+            </div>
+            <div class="status-badge">● ONLINE</div>
+        </header>
+
+        <!-- Monitor de FPS -->
+        <section class="card hero-fps">
+            <div class="card-title" style="margin-bottom:6px;">Taxa de Atualização do Ecrã</div>
+            <div class="fps-display" id="fpsDisplay">--<small> FPS</small></div>
+        </section>
+
+        <!-- Ajustes do Game Turbo (GPU & Toque) -->
+        <section class="card">
+            <div class="card-title" style="margin-bottom:12px;">Ajustes de Desempenho do Jogo</div>
             
+            <div class="range-group">
+                <div class="range-header">
+                    <span>Limite de Taxa de Quadros</span>
+                    <strong id="fpsLimitVal" class="cyan">120 FPS</strong>
+                </div>
+                <input type="range" min="60" max="120" step="30" value="120" oninput="document.getElementById('fpsLimitVal').textContent = this.value + ' FPS'">
+            </div>
+
+            <div class="range-group">
+                <div class="range-header">
+                    <span>Sensibilidade do Toque (GPU)</span>
+                    <strong id="sensVal" class="cyan">Alta</strong>
+                </div>
+                <input type="range" min="1" max="3" value="3" oninput="const labels=['Baixa','Média','Alta']; document.getElementById('sensVal').textContent = labels[this.value-1]">
+            </div>
+        </section>
+
+        <!-- Lista de Jogos e Apps Adicionados pelo Utilizador -->
+        <section class="card">
+            <div class="card-header-row">
+                <span class="card-title">Meus Jogos & Aplicações</span>
+                <button class="btn-add-game" onclick="openAddModal()">➕ Adicionar App</button>
+            </div>
+
+            <div class="game-list" id="gameList">
+                <!-- Os jogos serão carregados dinamicamente aqui -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para Adicionar Novo Jogo/App -->
+    <div class="overlay" id="addModal">
+        <div class="modal-box">
+            <h3 style="font-size: 1rem; color: var(--text-main);">Adicionar Novo Jogo / App</h3>
+            <input type="text" id="newGameName" class="input-field" placeholder="Nome do Jogo (ex: Fortnite)">
+            <input type="text" id="newGameIcon" class="input-field" placeholder="Emoji do Ícone (ex: 🎮, ⚽, 🚀)" value="🎮">
+            
+            <button class="btn-modal btn-primary" onclick="addNewGame()">Adicionar ao Game Turbo</button>
+            <button class="btn-modal btn-secondary" onclick="closeAddModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Modal de Otimização -->
+    <div class="overlay" id="optOverlay">
+        <div class="modal-box" style="text-align: center;">
+            <h3 id="optTitle" style="color: var(--cyan-accent);">Otimizando Jogo...</h3>
+            <p id="optStatus" style="font-size: 0.8rem; color: var(--text-dim); margin: 10px 0;">Ajustando GPU e memória RAM...</p>
+            <button class="btn-modal btn-primary" id="launchBtn" style="display:none;" onclick="closeOptOverlay()">▶️ ABRIR JOGO OTIMIZADO</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        "use strict";
+
+        // Jogos Padrão Iniciais
+        const defaultGames = [
+            { name: "Free Fire", icon: "🔥" },
+            { name: "PUBG Mobile", icon: "🔫" },
+            { name: "Call of Duty", icon: "🎯" }
+        ];
+
+        let userGames = [];
+
+        /* 1. Carregar Jogos Guardados no Telemóvel */
+        function loadGames() {
+            const saved = localStorage.getItem("gt_user_games");
+            if (saved) {
+                userGames = JSON.parse(saved);
+            } else {
+                userGames = [...defaultGames];
+                saveGames();
+            }
+            renderGameList();
+        }
+
+        function saveGames() {
+            localStorage.setItem("gt_user_games", JSON.stringify(userGames));
+        }
+
+        /* 2. Renderizar Lista na Tela */
+        function renderGameList() {
+            const listEl = document.getElementById("gameList");
+            listEl.innerHTML = "";
+
+            if (userGames.length === 0) {
+                listEl.innerHTML = `<div style="text-align:center; font-size:0.8rem; color:var(--text-dim); padding:15px;">Nenhum jogo adicionado. Clique em "Adicionar App".</div>`;
+                return;
+            }
+
+            userGames.forEach((game, index) => {
+                const item = document.createElement("div");
+                item.className = "game-item";
+                item.innerHTML = `
+                    <div class="game-meta">
+                        <div class="game-icon">${game.icon}</div>
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.9rem;">${game.name}</div>
+                            <div style="font-size: 0.7rem; color: var(--text-dim);">Perfil GPU Ativo</div>
+                        </div>
+                    </div>
+                    <div class="game-actions">
+                        <button class="btn-opt" onclick="optimizeGame('${game.name}')">Otimizar</button>
+                        <button class="btn-del" onclick="deleteGame(${index})">✕</button>
+                    </div>
+                `;
+                listEl.appendChild(item);
+            });
+        }
+
+        /* 3. Adicionar e Remover Jogos */
+        function openAddModal() {
+            document.getElementById("addModal").style.display = "flex";
+        }
+
+        function closeAddModal() {
+            document.getElementById("addModal").style.display = "none";
+            document.getElementById("newGameName").value = "";
+        }
+
+        function addNewGame() {
+            const nameInput = document.getElementById("newGameName").value.trim();
+            const iconInput = document.getElementById("newGameIcon").value.trim() || "🎮";
+
+            if (!nameInput) {
+                showToast("Por favor, digite o nome do jogo.");
+                return;
+            }
+
+            userGames.push({ name: nameInput, icon: iconInput });
+            saveGames();
+            renderGameList();
+            closeAddModal();
+            showToast(`${nameInput} adicionado com sucesso!`);
+        }
+
+        function deleteGame(index) {
+            const removed = userGames[index].name;
+            userGames.splice(index, 1);
+            saveGames();
+            renderGameList();
+            showToast(`${removed} removido.`);
+        }
+
+        /* 4. Simulação de Otimização */
+        function optimizeGame(gameName) {
+            const overlay = document.getElementById("optOverlay");
+            const title = document.getElementById("optTitle");
+            const status = document.getElementById("optStatus");
+            const launchBtn = document.getElementById("launchBtn");
+
+            overlay.style.display = "flex";
+            launchBtn.style.display = "none";
+            title.textContent = `Otimizando ${gameName}...`;
+            status.textContent = "Limpando cache e alocando memória GPU...";
+
+            setTimeout(() => {
+                status.textContent = "Ajustando taxa de resposta ao toque...";
+            }, 1000);
+
+            setTimeout(() => {
+                title.textContent = "⚡ Otimização Concluída!";
+                status.textContent = `${gameName} está pronto para rodar com desempenho máximo.`;
+                launchBtn.style.display = "block";
+            }, 2000);
+        }
+
+        function closeOptOverlay() {
+            document.getElementById("optOverlay").style.display = "none";
+        }
+
+        /* 5. Leitor de FPS em Tempo Real */
+        let frameCounter = 0;
+        let lastTime = performance.now();
+        function calcFPS(now) {
+            frameCounter++;
+            if (now - lastTime >= 1000) {
+                const fps = Math.round((frameCounter * 1000) / (now - lastTime));
+                document.getElementById("fpsDisplay").innerHTML = `${fps}<small> FPS</small>`;
+                frameCounter = 0;
+                lastTime = now;
+            }
+            requestAnimationFrame(calcFPS);
+        }
+        requestAnimationFrame(calcFPS);
+
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.textContent = msg;
+            t.classList.add("show");
+            clearTimeout(window.__tTimer);
+            window.__tTimer = setTimeout(() => t.classList.remove("show"), 2000);
+        }
+
+        // Inicializar a lista de jogos ao carregar
+        loadGames();
+    </script>
+</body>
+</html>
