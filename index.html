@@ -170,7 +170,6 @@
             color: var(--text-dim);
         }
 
-        /* Lista de Jogos Customizável */
         .game-list {
             display: flex;
             flex-direction: column;
@@ -243,7 +242,6 @@
             justify-content: center;
         }
 
-        /* Configurações Estilo Game Turbo (Gpu / Sensibilidade) */
         .range-group {
             display: flex;
             flex-direction: column;
@@ -266,7 +264,6 @@
             height: 6px;
         }
 
-        /* Modal Generico */
         .overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -359,13 +356,11 @@
             <div class="status-badge">● ONLINE</div>
         </header>
 
-        <!-- Monitor de FPS -->
         <section class="card hero-fps">
             <div class="card-title" style="margin-bottom:6px;">Taxa de Atualização do Ecrã</div>
             <div class="fps-display" id="fpsDisplay">--<small> FPS</small></div>
         </section>
 
-        <!-- Ajustes do Game Turbo (GPU & Toque) -->
         <section class="card">
             <div class="card-title" style="margin-bottom:12px;">Ajustes de Desempenho do Jogo</div>
             
@@ -386,20 +381,16 @@
             </div>
         </section>
 
-        <!-- Lista de Jogos e Apps Adicionados pelo Utilizador -->
         <section class="card">
             <div class="card-header-row">
                 <span class="card-title">Meus Jogos & Aplicações</span>
                 <button class="btn-add-game" onclick="openAddModal()">➕ Adicionar App</button>
             </div>
 
-            <div class="game-list" id="gameList">
-                <!-- Os jogos serão carregados dinamicamente aqui -->
-            </div>
+            <div class="game-list" id="gameList"></div>
         </section>
     </div>
 
-    <!-- Modal para Adicionar Novo Jogo/App -->
     <div class="overlay" id="addModal">
         <div class="modal-box">
             <h3 style="font-size: 1rem; color: var(--text-main);">Adicionar Novo Jogo / App</h3>
@@ -411,7 +402,6 @@
         </div>
     </div>
 
-    <!-- Modal de Otimização -->
     <div class="overlay" id="optOverlay">
         <div class="modal-box" style="text-align: center;">
             <h3 id="optTitle" style="color: var(--cyan-accent);">Otimizando Jogo...</h3>
@@ -425,7 +415,6 @@
     <script>
         "use strict";
 
-        // Jogos Padrão Iniciais
         const defaultGames = [
             { name: "Free Fire", icon: "🔥" },
             { name: "PUBG Mobile", icon: "🔫" },
@@ -434,7 +423,6 @@
 
         let userGames = [];
 
-        /* 1. Carregar Jogos Guardados no Telemóvel */
         function loadGames() {
             const saved = localStorage.getItem("gt_user_games");
             if (saved) {
@@ -450,7 +438,6 @@
             localStorage.setItem("gt_user_games", JSON.stringify(userGames));
         }
 
-        /* 2. Renderizar Lista na Tela */
         function renderGameList() {
             const listEl = document.getElementById("gameList");
             listEl.innerHTML = "";
@@ -480,7 +467,6 @@
             });
         }
 
-        /* 3. Adicionar e Remover Jogos */
         function openAddModal() {
             document.getElementById("addModal").style.display = "flex";
         }
@@ -514,7 +500,6 @@
             showToast(`${removed} removido.`);
         }
 
-        /* 4. Simulação de Otimização */
         function optimizeGame(gameName) {
             const overlay = document.getElementById("optOverlay");
             const title = document.getElementById("optTitle");
@@ -541,7 +526,6 @@
             document.getElementById("optOverlay").style.display = "none";
         }
 
-        /* 5. Leitor de FPS em Tempo Real */
         let frameCounter = 0;
         let lastTime = performance.now();
         function calcFPS(now) {
@@ -564,7 +548,6 @@
             window.__tTimer = setTimeout(() => t.classList.remove("show"), 2000);
         }
 
-        // Inicializar a lista de jogos ao carregar
         loadGames();
     </script>
 </body>
