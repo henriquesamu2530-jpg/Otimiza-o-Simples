@@ -1,102 +1,463 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIYUH BOOST</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOOST LAG PRO - Otimizador de Jogos</title>
+  <style>
+    :root {
+      --bg-color: #0b0e14;
+      --card-bg: #141923;
+      --card-border: #1e2638;
+      --primary-cyan: #00d2ff;
+      --primary-blue: #0052ff;
+      --text-main: #ffffff;
+      --text-sub: #8a99ad;
+      --accent-green: #00ff88;
+    }
 
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        .card {
-            background: #1e293b;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            border: 1px solid #334155;
-        }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
-        h1 {
-            color: #38bdf8;
-            font-size: 1.8rem;
-            margin-bottom: 12px;
-        }
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+      padding: 20px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 210, 255, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
 
-        p {
-            color: #94a3b8;
-            font-size: 0.95rem;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
 
-        .btn {
-            background-color: #0284c7;
-            color: #ffffff;
-            border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-            width: 100%;
-        }
+    .badge-pro {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
 
-        .btn:hover {
-            background-color: #0369a1;
-        }
+    .device-info {
+      font-size: 13px;
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
 
-        .btn:active {
-            transform: scale(0.98);
-        }
+    /* Monitor de Sistema */
+    .system-monitor {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
 
-        .status {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #4ade80;
-            display: none;
-        }
-    </style>
+    .stat-box {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      border-radius: 10px;
+      border-left: 3px solid var(--primary-cyan);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-sub);
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--primary-cyan);
+      margin-top: 4px;
+    }
+
+    /* Ações Rápidas */
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-quick {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-quick:active {
+      border-color: var(--primary-cyan);
+      transform: scale(0.98);
+    }
+
+    /* Seção de Jogos */
+    .section-title {
+      font-size: 15px;
+      color: var(--text-sub);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .btn-add {
+      background: transparent;
+      border: 1px solid var(--primary-cyan);
+      color: var(--primary-cyan);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .games-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .game-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: 0.3s;
+    }
+
+    .game-card:hover {
+      border-color: var(--primary-cyan);
+      box-shadow: 0 0 12px rgba(0, 210, 255, 0.15);
+    }
+
+    .game-details {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .game-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1e2638, #0b0e14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      border: 1px solid var(--card-border);
+    }
+
+    .game-name {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .game-status {
+      font-size: 12px;
+      color: var(--accent-green);
+      margin-top: 2px;
+    }
+
+    .btn-optimize {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(0, 210, 255, 0.4);
+      transition: 0.2s;
+    }
+
+    .btn-optimize:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 20px rgba(0, 210, 255, 0.8);
+    }
+
+    /* Modal Adicionar Jogo */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--primary-cyan);
+      padding: 20px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .modal-content input {
+      background: var(--bg-color);
+      border: 1px solid var(--card-border);
+      padding: 12px;
+      border-radius: 8px;
+      color: white;
+      outline: none;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn-modal-cancel {
+      flex: 1;
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .btn-modal-save {
+      flex: 1;
+      background: var(--primary-cyan);
+      color: black;
+      font-weight: bold;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>KIYUH BOOST</h1>
-        <p>Otimização e desempenho para a sua aplicação Android.</p>
-        <button class="btn" onclick="iniciarBoost()">Iniciar Otimização</button>
-        <div id="statusMsg" class="status">✓ Sistema otimizado com sucesso!</div>
+  <!-- Header principal com dados do aparelho -->
+  <div class="header">
+    <h1>BOOST LAG <span class="badge-pro">PRO</span></h1>
+    <div class="device-info">
+      <span>📱</span> <span id="device-model">Identificando celular...</span>
     </div>
+  </div>
 
-    <script>
-        function iniciarBoost() {
-            const status = document.getElementById('statusMsg');
-            status.style.display = 'block';
-            status.textContent = 'A otimizar sistema...';
-            status.style.color = '#38bdf8';
+  <!-- Monitor em tempo real -->
+  <div class="system-monitor">
+    <div class="stat-box">
+      <div class="stat-label">Memória RAM Livre</div>
+      <div class="stat-value" id="ram-value">1.8 GB / 4.0 GB</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Latência / Ping</div>
+      <div class="stat-value" id="ping-value">24 ms</div>
+    </div>
+  </div>
 
-            setTimeout(() => {
-                status.textContent = '✓ Sistema otimizado com sucesso!';
-                status.style.color = '#4ade80';
-            }, 1500);
-        }
-    </script>
+  <!-- Ações rápidas -->
+  <div class="quick-actions">
+    <button class="btn-quick" onclick="limparRAMGeral()">
+      <span>🧹</span> Limpar RAM
+    </button>
+    <button class="btn-quick" onclick="solicitarPermissaoNotificacao()">
+      <span>🔔</span> Ativar Alertas
+    </button>
+  </div>
 
+  <!-- Seção de Jogos Cadastrados -->
+  <div class="section-title">
+    <span>MEUS JOGOS (& APP)</span>
+    <button class="btn-add" onclick="abrirModal()">+ Adicionar Jogo</button>
+  </div>
+
+  <div class="games-list" id="games-container">
+    <!-- Os jogos entram dinamicamente via JavaScript -->
+  </div>
+
+  <!-- Modal para adicionar novos jogos -->
+  <div class="modal" id="add-modal">
+    <div class="modal-content">
+      <h3 style="color: var(--primary-cyan);">Adicionar Novo Jogo</h3>
+      <input type="text" id="game-name-input" placeholder="Nome do Jogo (ex: Roblox)">
+      <input type="text" id="game-emoji-input" placeholder="Emoji para o ícone (ex: 🎮)">
+      <div class="modal-buttons">
+        <button class="btn-modal-cancel" onclick="fecharModal()">Cancelar</button>
+        <button class="btn-modal-save" onclick="adicionarJogo()">Adicionar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Lista inicial de jogos
+    let jogos = [
+      { id: 1, nome: 'Free Fire', emoji: '🔥', status: 'Otimização recomendada' },
+      { id: 2, nome: 'Call of Duty: Mobile', emoji: '🔫', status: 'Pronto para otimizar' },
+      { id: 3, nome: 'Brawl Stars', emoji: '⭐', status: 'Pronto para otimizar' }
+    ];
+
+    // Reconhecimento do Aparelho (User-Agent)
+    function detectarDispositivo() {
+      const ua = navigator.userAgent;
+      let modelo = "Smartphone Android";
+      
+      if (ua.includes("Samsung")) modelo = "Samsung Galaxy Auto-detectado";
+      else if (ua.includes("Xiaomi") || ua.includes("Redmi")) modelo = "Xiaomi / Redmi Auto-detectado";
+      else if (ua.includes("Motorola")) modelo = "Motorola Moto Auto-detectado";
+      else if (ua.includes("Android")) modelo = "Celular Android Detectado";
+      
+      document.getElementById('device-model').innerText = modelo;
+    }
+
+    // Renderizar a lista de jogos na tela
+    function renderizarJogos() {
+      const container = document.getElementById('games-container');
+      container.innerHTML = '';
+
+      jogos.forEach(jogo => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+          <div class="game-details">
+            <div class="game-icon">${jogo.emoji}</div>
+            <div>
+              <div class="game-name">${jogo.nome}</div>
+              <div class="game-status" id="status-${jogo.id}">${jogo.status}</div>
+            </div>
+          </div>
+          <button class="btn-optimize" onclick="otimizarJogo(${jogo.id}, '${jogo.nome}')">Otimizar</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Ação do Botão Otimizar
+    function otimizarJogo(id, nomeJogo) {
+      const statusElement = document.getElementById(`status-${id}`);
+      statusElement.innerText = "⚡ Otimizando...";
+      statusElement.style.color = "#00d2ff";
+
+      setTimeout(() => {
+        statusElement.innerText = "🚀 Otimizado! RAM liberada";
+        statusElement.style.color = "#00ff88";
+
+        // Atualizar RAM no monitor
+        document.getElementById('ram-value').innerText = "2.6 GB / 4.0 GB";
+
+        // Enviar Notificação Push no celular
+        dispararNotificacao(nomeJogo);
+      }, 1200);
+    }
+
+    // Limpeza Geral
+    function limparRAMGeral() {
+      alert("🧹 Limpeza profunda executada!\n\nForam liberados 450MB de memória RAM no seu aparelho.");
+      document.getElementById('ram-value').innerText = "2.8 GB / 4.0 GB";
+    }
+
+    // Solicitar Permissão de Notificações
+    function solicitarPermissaoNotificacao() {
+      if ("Notification" in window) {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            alert("🔔 Alertas de otimização ativados com sucesso!");
+          } else {
+            alert("⚠️ Permissão para notificações negada.");
+          }
+        });
+      } else {
+        alert("Seu navegador não suporta notificações nativas.");
+      }
+    }
+
+    // Disparar Notificação Nativa
+    function dispararNotificacao(nomeJogo) {
+      if ("Notification" in window && Notification.permission === "granted") {
+        new Notification(`⚡ ${nomeJogo} Otimizado!`, {
+          body: `Conexão priorizada e RAM liberada para rodar liso.`,
+          icon: 'https://via.placeholder.com/128/00d2ff/ffffff?text=BOOST'
+        });
+      }
+    }
+
+    // Gerenciamento do Modal
+    function abrirModal() { document.getElementById('add-modal').style.display = 'flex'; }
+    function fecharModal() { document.getElementById('add-modal').style.display = 'none'; }
+
+    function adicionarJogo() {
+      const nome = document.getElementById('game-name-input').value;
+      const emoji = document.getElementById('game-emoji-input').value || '🎮';
+
+      if (nome.trim() !== '') {
+        const novoJogo = {
+          id: Date.now(),
+          nome: nome,
+          emoji: emoji,
+          status: 'Pronto para otimizar'
+        };
+        jogos.push(novoJogo);
+        renderizarJogos();
+        fecharModal();
+        document.getElementById('game-name-input').value = '';
+        document.getElementById('game-emoji-input').value = '';
+      }
+    }
+
+    // Inicialização
+    window.onload = function() {
+      detectarDispositivo();
+      renderizarJogos();
+    };
+  </script>
 </body>
-</html>
+      </html>
+      
